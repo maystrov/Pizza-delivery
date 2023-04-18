@@ -1,5 +1,5 @@
 import "../src/scss/app.scss";
-import { useEffect, useState } from "react";
+import React from "react";
 import Header from "./components/Header";
 import ErrorPage from "./pages/ErrorPage";
 import { Routes, Route } from "react-router-dom";

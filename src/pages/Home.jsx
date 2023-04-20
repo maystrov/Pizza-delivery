@@ -30,6 +30,7 @@ export default function Home() {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
+      console.log(params);
       dispatch(setFilter(params));
     }
   }, []);

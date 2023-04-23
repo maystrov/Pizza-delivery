@@ -1,6 +1,9 @@
 @import "../variables";
 
 .sort {
+  .icon-rotated {
+    transform: rotate(180deg);
+  }
   position: relative;
   &__label {
     display: flex;
@@ -20,7 +23,6 @@
       cursor: pointer;
     }
   }
-
   &__popup {
     position: absolute;
     right: 0;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
 import axios from "axios";
@@ -11,13 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { setFilter } from "../store/slices/filterSlice";
 
 export default function Home() {
-  const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pizzas, setPizzas] = useState([]);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
 
+  // Use only necessary values from the store
   const {
     categoryId,
     sortId,
@@ -30,7 +28,17 @@ export default function Home() {
   const search = searchValue ? `&search=${searchValue}` : "";
   const category = categoryId ? `&category=${categoryId}` : "";
 
-  const fetchPizzas = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = qs.parse(window.location.search.substring(1));
+    // Use setFilter only if params exist
+    if (params) {
+      dispatch(setFilter(params));
+    }
+  }, [dispatch]); // Dispatch to be added as a dependency to avoid any warnings
+
+  useEffect(() => {
     setIsLoading(true);
     axios
       .get(`${baseUrl}?limit=6&page=${page}${category}&sortby=${sortItems[sortId]}${search}`)
@@ -39,34 +47,17 @@ export default function Home() {
         setIsLoading(false);
       })
       .catch((error) => alert(error.message + " (loading error)"));
-  };
+  }, [categoryId, sortId, searchValue, page, category, search]);
 
   useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      dispatch(setFilter(params));
-      isSearch.current = true;
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!isSearch.current) {
-      fetchPizzas();
-    }
-    isSearch.current = false;
-  }, [categoryId, sortId, searchValue, page]);
-
-  useEffect(() => {
-    if (isMounted.current) {
-      const queryString = qs.stringify({
-        categoryId,
-        sortId,
-        page,
-      });
-      navigate(`?${queryString}`);
-    }
-    isMounted.current = true;
-  }, [categoryId, sortId, searchValue, page]);
+    // Update URL query string on changes to the filter
+    const queryString = qs.stringify({
+      categoryId,
+      sortId,
+      page,
+    });
+    navigate(`?${queryString}`);
+  }, [categoryId, sortId, page, navigate]);
 
   return (
     <>
@@ -77,7 +68,9 @@ export default function Home() {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} className="pizza-block" />)
+          ? Array.from({ length: 6 }, (_, index) => (
+              <Skeleton key={index} className="pizza-block" />
+            ))
           : pizzas.map((pizza) => <PizzaBlock key={pizza.title} {...pizza} />)}
       </div>
       <Pagination />

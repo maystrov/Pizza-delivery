@@ -2,8 +2,6 @@ import React from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-//повесить обработчить нажатия на обьект с классом 'cart' в этом файле
-
 export default function Cart() {
   return (
     <div className=" container--cart">

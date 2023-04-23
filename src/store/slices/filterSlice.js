@@ -31,7 +31,6 @@ export const filterSlice = createSlice({
       state.categoryId = Number(action.payload.categoryId);
       state.sortId = Number(action.payload.sortId);
       state.currentPage = Number(action.payload.page);
-      console.log(action.payload);
     },
   },
 });

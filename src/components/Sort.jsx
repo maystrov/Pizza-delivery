@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { changeSort } from "../store/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Sort() {
   const [open, setOpen] = useState(false);
+  const popupRef = useRef(null);
 
   const sortNames = ["популярности", "цене (возрастание)", "цене (убывание)", "названию"];
 
@@ -15,10 +16,19 @@ export default function Sort() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    const handlePopupClick = (e) => {
+      const path = e.composedPath();
+      if (!path.includes(popupRef.current)) setOpen(false);
+    };
+    document.body.addEventListener("click", handlePopupClick);
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={popupRef} className="sort">
       <div onClick={() => setOpen(!open)} className="sort__label">
         <svg
+          className={!open ? "icon-rotated" : ""}
           width="10"
           height="6"
           viewBox="0 0 10 6"

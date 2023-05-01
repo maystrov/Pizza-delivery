@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { changeSort } from "../store/slices/filterSlice";
+import { changeSort, selectFilter } from "../store/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Sort() {
@@ -8,7 +8,7 @@ export default function Sort() {
 
   const sortNames = ["популярности", "цене (возрастание)", "цене (убывание)", "названию"];
 
-  const sortId = useSelector((store) => store.filter.sortId);
+  const { sortId } = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const handleSelectItemClick = (i) => {

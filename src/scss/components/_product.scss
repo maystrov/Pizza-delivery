@@ -1,0 +1,23 @@
+.product {
+  .top {
+    display: flex;
+    img {
+      width: 40%;
+    }
+  }
+  .all-desc {
+    margin: 8px 0px;
+    // font-size: 20px;
+    line-height: 24px;
+    padding-left: 60px;
+
+    .title {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .description {
+      margin-bottom: 30px;
+    }
+  }
+}

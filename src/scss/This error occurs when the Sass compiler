@@ -1,1 +1,0 @@
-This error occurs when the Sass compiler cannot find the file that is being imported. Check to make sure that the file path is correct and that the file exists in the specified location.

@@ -2,12 +2,12 @@ import React, { useCallback, useState } from "react";
 import "./SearchBar.scss";
 import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSearchValue } from "../../store/slices/filterSlice";
+import { changeSearchValue, selectFilter } from "../../store/slices/filterSlice";
 import debounce from "lodash.debounce";
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
-  const searchValue = useSelector((store) => store.filter.searchValue);
+  const { searchValue } = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {

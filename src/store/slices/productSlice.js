@@ -2,14 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   categoryId: 0,
-  types: [],
-  activeType: 0,
-  sizes: [],
-  activeSize: 0,
+  sortId: 0,
+  searchValue: "",
+  currentPage: 1,
 };
 
 export const filterSlice = createSlice({
-  name: "product",
+  name: "filter",
   initialState,
   reducers: {
     changeCategory(state, action) {

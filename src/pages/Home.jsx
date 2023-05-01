@@ -14,6 +14,8 @@ import ErrorPage from "./ErrorPage";
 export default function Home() {
   const { items: pizzas, status } = useSelector(selectPizzaData);
 
+  console.log("Home page rendered");
+
   const {
     categoryId,
     sortId,
